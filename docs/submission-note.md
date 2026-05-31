@@ -2,7 +2,7 @@
 
 ## Implementation Idea
 
-Mini Atoms Builder recreates the core Atoms-style loop in a compact demo: a user enters a product idea, the system shows multiple agent roles working through the request, then returns a generated app preview and file set. The app is designed as a builder workspace instead of a static showcase.
+Mini Atoms Builder recreates the core Atoms-style loop in a compact Chinese demo: a user enters a product idea, the system shows PM / Architect / Engineer / QA roles working through the request, then returns a generated app preview and file set. The app is designed as an Atoms-like builder workspace instead of a static showcase.
 
 ## Key Tradeoffs
 
@@ -14,9 +14,10 @@ Mini Atoms Builder recreates the core Atoms-style loop in a compact demo: a user
 ## Completed
 
 - Real prompt interaction and streaming generation endpoint
-- Agent timeline
-- Live preview with clickable actions
-- Generated file browser
+- Chinese Atoms-like workspace shell
+- AI team timeline
+- App preview with clickable actions
+- Generated code file browser
 - Save, reload, visual edit, and remix workflow
 - Browser persistence and Supabase-ready API routes
 - Test coverage for generation templates, parsing, ModelScope config, project state, persistence, and preview interaction

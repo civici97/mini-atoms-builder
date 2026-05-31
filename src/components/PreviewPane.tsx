@@ -29,7 +29,7 @@ export function PreviewPane({ preview, device }: PreviewPaneProps) {
           <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
         </div>
         <span className="text-xs font-medium text-slate-500">
-          {isMobile ? "mobile preview" : "desktop preview"}
+          {isMobile ? "手机预览" : "桌面预览"}
         </span>
       </div>
 
@@ -80,7 +80,7 @@ export function PreviewPane({ preview, device }: PreviewPaneProps) {
               ))}
             </div>
             <p className="mt-4 min-h-5 text-xs font-medium text-slate-500">
-              {lastAction ? `Last action: ${lastAction}` : "Ready for interaction"}
+              {lastAction ? `刚刚执行：${lastAction}` : "等待交互"}
             </p>
           </div>
 

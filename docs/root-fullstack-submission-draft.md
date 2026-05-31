@@ -16,7 +16,7 @@ https://github.com/civici97/mini-atoms-builder
 
 ### 实现思路
 
-我实现了一个 ModelScope 驱动的 Mini Atoms Builder。用户输入产品想法后，系统以 PM / Architect / Engineer / QA 四个智能体阶段展示生成过程，并输出一个可交互的网页应用预览、文件列表和项目数据。整体体验贴近 Atoms/MGX 的“描述需求 -> 智能体协作 -> 应用预览 -> 继续迭代”主流程。
+我实现了一个 ModelScope 驱动的 Mini Atoms Builder。用户输入中文产品想法后，系统以 PM / Architect / Engineer / QA 四个智能体阶段展示生成过程，并输出一个可交互的网页应用预览、文件列表和项目数据。整体界面已调整为中文 Atoms 工作台风格，贴近 Atoms/MGX 的“描述需求 -> 智能体协作 -> 应用预览 -> 继续迭代”主流程。
 
 ### 关键取舍
 
@@ -28,7 +28,7 @@ https://github.com/civici97/mini-atoms-builder
 ### 当前完成程度
 
 - 已完成真实 Prompt 输入和生成流程。
-- 已完成 Agent Timeline、Live Preview、Generated Files、Project Data 三栏工作台。
+- 已完成中文化 Atoms 工作台：AI 团队、应用预览、代码文件、项目数据等核心区域。
 - 已完成桌面/移动预览切换。
 - 已完成预览内按钮交互反馈。
 - 已完成保存、刷新恢复、视觉编辑和 Remix 版本迭代。

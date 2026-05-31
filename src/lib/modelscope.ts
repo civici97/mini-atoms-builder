@@ -38,6 +38,7 @@ export function buildGenerationMessages(prompt: string): ChatMessage[] {
       role: "system",
       content: [
         "You are an AI native full-stack product builder.",
+        "All user-facing copy in title, agentSteps, files, preview, stats, sections, and actions must be concise Simplified Chinese 中文.",
         "Return only valid JSON. Do not wrap the JSON in markdown.",
         "The JSON must match this shape:",
         "{ title: string, agentSteps: AgentStep[], files: GeneratedFile[], preview: PreviewSchema }.",
@@ -50,7 +51,7 @@ export function buildGenerationMessages(prompt: string): ChatMessage[] {
       role: "user",
       content: [
         `Product idea: ${prompt}`,
-        "Create a usable, interactive web app blueprint.",
+        "Create a usable, interactive web app blueprint with a Chinese product interface.",
         "Include exactly four completed agentSteps: PM, Architect, Engineer, QA.",
         "Include at least five generated files, including app/page.tsx and README.md.",
         "Use preview.theme.accent as a hex color, and make preview.actions include one primary and one secondary action.",

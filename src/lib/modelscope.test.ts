@@ -35,6 +35,7 @@ describe("buildGenerationMessages", () => {
 
     expect(messages[0].role).toBe("system");
     expect(messages[0].content).toContain("Return only valid JSON");
+    expect(messages[0].content).toContain("中文");
     expect(messages[1].content).toContain("做一个 AI 招聘看板");
     expect(messages[1].content).toContain("agentSteps");
     expect(messages[1].content).toContain("preview");

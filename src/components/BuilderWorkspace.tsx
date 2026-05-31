@@ -45,7 +45,7 @@ const accentSwatches = ["#2563eb", "#0f766e", "#7c3aed", "#dc2626", "#c2410c"];
 
 export function BuilderWorkspace() {
   const starterResult = useMemo(
-    () => createFallbackBuild("Build an AI product operations console"),
+    () => createFallbackBuild("搭建一个 AI 产品运营工作台"),
     []
   );
   const starterProject = useMemo(
@@ -70,7 +70,7 @@ export function BuilderWorkspace() {
     initialGeneration.files[0].path
   );
   const [isGenerating, setIsGenerating] = useState(false);
-  const [status, setStatus] = useState("Ready");
+  const [status, setStatus] = useState("就绪");
   const [streamText, setStreamText] = useState("");
   const [editTitle, setEditTitle] = useState(initialProject.title);
   const [editAccent, setEditAccent] = useState(
@@ -90,7 +90,7 @@ export function BuilderWorkspace() {
     }
 
     setIsGenerating(true);
-    setStatus(mode === "new" ? "Generating" : "Remixing");
+    setStatus(mode === "new" ? "生成中" : "迭代中");
     setStreamText("");
     setAgentSteps([]);
 
@@ -124,7 +124,7 @@ export function BuilderWorkspace() {
 
       persistProject(nextProject);
       loadProject(nextProject);
-      setStatus(result.warning ? "Fallback used" : "Generated");
+      setStatus(result.warning ? "已使用本地兜底" : "已生成");
     } catch (error) {
       const fallback = createFallbackBuild(prompt);
       const nextProject =
@@ -138,7 +138,7 @@ export function BuilderWorkspace() {
 
       persistProject(nextProject);
       loadProject(nextProject);
-      setStatus("Local fallback");
+      setStatus("本地兜底");
     } finally {
       setIsGenerating(false);
     }
@@ -219,23 +219,23 @@ export function BuilderWorkspace() {
     });
     persistProject(edited);
     loadProject(edited);
-    setStatus("Saved");
+    setStatus("已保存");
   }
 
   return (
-    <main className="min-h-screen">
-      <header className="border-b border-[#d9e2ec] bg-white">
+    <main className="min-h-screen bg-[#f6f5f1] text-[#171717]">
+      <header className="border-b border-[#dedbd2] bg-[#fbfaf7]">
         <div className="flex min-h-16 items-center justify-between gap-4 px-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#111827] text-white">
+            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#171717] text-white">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
             </div>
             <div>
-              <h1 className="text-base font-semibold text-[#172033]">
-                Mini Atoms Builder
+              <h1 className="text-base font-semibold text-[#171717]">
+                Atoms 工作台
               </h1>
-              <p className="text-xs text-[#667085]">
-                ModelScope Qwen / Supabase-ready
+              <p className="text-xs text-[#706f6a]">
+                Mini Atoms Builder · 魔搭 Qwen 驱动
               </p>
             </div>
           </div>
@@ -244,24 +244,41 @@ export function BuilderWorkspace() {
             <StatusPill label={status} busy={isGenerating} />
             <button
               type="button"
-              title="Save project"
+              title="保存项目"
               onClick={saveVisualEdit}
-              className="inline-flex h-10 items-center gap-2 rounded-md border border-[#d9e2ec] bg-white px-3 text-sm font-semibold text-[#172033] hover:bg-[#f6f8fb]"
+              className="inline-flex h-10 items-center gap-2 rounded-md border border-[#dedbd2] bg-white px-3 text-sm font-semibold text-[#171717] hover:bg-[#f0eee8]"
             >
               <Save className="h-4 w-4" aria-hidden="true" />
-              Save
+              保存
             </button>
           </div>
         </div>
       </header>
 
-      <div className="grid min-h-[calc(100vh-65px)] grid-cols-1 gap-4 p-4 xl:grid-cols-[360px_minmax(520px,1fr)_360px]">
+      <div className="grid min-h-[calc(100vh-65px)] grid-cols-1 gap-4 p-4 xl:grid-cols-[260px_minmax(520px,1fr)_380px]">
         <aside className="grid gap-4 xl:max-h-[calc(100vh-97px)] xl:overflow-auto">
-          <Panel title="Prompt" icon={<Bot className="h-4 w-4" />}>
+          <section className="rounded-lg bg-[#171717] p-3 text-white">
+            <div className="px-2 py-2 text-xs font-semibold uppercase text-[#9d9b92]">
+              工作区
+            </div>
+            <nav className="grid gap-1">
+              <NavItem active icon={<History className="h-4 w-4" />} label="应用列表" />
+              <NavItem icon={<Sparkles className="h-4 w-4" />} label="团队运行" />
+              <NavItem icon={<FileCode2 className="h-4 w-4" />} label="代码资产" />
+              <NavItem icon={<Database className="h-4 w-4" />} label="数据记录" />
+            </nav>
+            <div className="mt-4 rounded-md border border-white/10 bg-white/[0.06] p-3">
+              <p className="text-xs text-[#b8b5aa]">当前模型</p>
+              <p className="mt-1 text-sm font-semibold">Qwen2.5 Coder</p>
+            </div>
+          </section>
+
+          <Panel title="需求输入" icon={<Bot className="h-4 w-4" />}>
             <textarea
               value={prompt}
               onChange={(event) => setPrompt(event.target.value)}
-              className="min-h-36 w-full resize-none rounded-lg border border-[#d9e2ec] bg-white p-3 text-sm leading-6 text-[#172033]"
+              aria-label="应用需求"
+              className="min-h-36 w-full resize-none rounded-md border border-[#dedbd2] bg-white p-3 text-sm leading-6 text-[#171717]"
               maxLength={4000}
             />
             <div className="mt-3 grid grid-cols-2 gap-2">
@@ -269,48 +286,48 @@ export function BuilderWorkspace() {
                 type="button"
                 onClick={() => handleGenerate("new")}
                 disabled={isGenerating}
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#2563eb] px-3 text-sm font-semibold text-white disabled:opacity-60"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#171717] px-3 text-sm font-semibold text-white disabled:opacity-60"
               >
                 {isGenerating ? (
                   <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
                 ) : (
                   <Send className="h-4 w-4" aria-hidden="true" />
                 )}
-                Generate
+                开始生成
               </button>
               <button
                 type="button"
                 onClick={() => handleGenerate("remix")}
                 disabled={isGenerating}
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-[#d9e2ec] bg-white px-3 text-sm font-semibold text-[#172033] disabled:opacity-60"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-[#dedbd2] bg-white px-3 text-sm font-semibold text-[#171717] disabled:opacity-60"
               >
                 <RefreshCcw className="h-4 w-4" aria-hidden="true" />
-                Remix
+                继续迭代
               </button>
             </div>
           </Panel>
 
-          <Panel title="Agent Timeline" icon={<Sparkles className="h-4 w-4" />}>
+          <Panel title="AI 团队" icon={<Sparkles className="h-4 w-4" />}>
             <ol className="space-y-3">
               {agentSteps.map((step) => (
                 <li
                   key={step.id}
-                  className="rounded-lg border border-[#d9e2ec] bg-white p-3"
+                  className="rounded-md border border-[#dedbd2] bg-white p-3"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <p className="text-xs font-semibold uppercase text-[#2563eb]">
+                      <p className="text-xs font-semibold uppercase text-[#6f6b5f]">
                         {step.role}
                       </p>
-                      <h3 className="mt-1 text-sm font-semibold text-[#172033]">
+                      <h3 className="mt-1 text-sm font-semibold text-[#171717]">
                         {step.title}
                       </h3>
                     </div>
-                    <span className="rounded-md bg-[#eef6ff] px-2 py-1 text-xs font-medium text-[#1d4ed8]">
+                    <span className="rounded-md bg-[#f0eee8] px-2 py-1 text-xs font-medium text-[#59564f]">
                       {step.status}
                     </span>
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-[#667085]">
+                  <p className="mt-2 text-sm leading-6 text-[#706f6a]">
                     {step.summary}
                   </p>
                 </li>
@@ -323,23 +340,23 @@ export function BuilderWorkspace() {
             ) : null}
           </Panel>
 
-          <Panel title="Projects" icon={<History className="h-4 w-4" />}>
+          <Panel title="我的应用" icon={<History className="h-4 w-4" />}>
             <div className="space-y-2">
               {projects.length === 0 ? (
-                <p className="text-sm text-[#667085]">No saved projects yet.</p>
+                <p className="text-sm text-[#706f6a]">暂无保存的应用。</p>
               ) : null}
               {projects.map((project) => (
                 <button
                   key={project.id}
                   type="button"
                   onClick={() => loadProject(project)}
-                  className="w-full rounded-lg border border-[#d9e2ec] bg-white p-3 text-left hover:bg-[#f6f8fb]"
+                  className="w-full rounded-md border border-[#dedbd2] bg-white p-3 text-left hover:bg-[#f0eee8]"
                 >
-                  <span className="block text-sm font-semibold text-[#172033]">
+                  <span className="block text-sm font-semibold text-[#171717]">
                     {project.title}
                   </span>
-                  <span className="mt-1 block text-xs text-[#667085]">
-                    {project.generations.length} versions
+                  <span className="mt-1 block text-xs text-[#706f6a]">
+                    {project.generations.length} 个版本
                   </span>
                 </button>
               ))}
@@ -348,23 +365,23 @@ export function BuilderWorkspace() {
         </aside>
 
         <section className="grid min-h-[720px] gap-4">
-          <div className="flex items-center justify-between gap-3 rounded-lg border border-[#d9e2ec] bg-white p-3">
+          <div className="flex items-center justify-between gap-3 rounded-lg border border-[#dedbd2] bg-[#fbfaf7] p-3">
             <div className="flex items-center gap-2">
-              <Play className="h-4 w-4 text-[#0f766e]" aria-hidden="true" />
-              <h2 className="text-sm font-semibold text-[#172033]">
-                Live Preview
+              <Play className="h-4 w-4 text-[#59564f]" aria-hidden="true" />
+              <h2 className="text-sm font-semibold text-[#171717]">
+                应用预览
               </h2>
             </div>
-            <div className="flex rounded-md border border-[#d9e2ec] bg-[#f6f8fb] p-1">
+            <div className="flex rounded-md border border-[#dedbd2] bg-[#f0eee8] p-1">
               <DeviceButton
                 active={device === "desktop"}
-                label="Desktop"
+                label="桌面"
                 onClick={() => setDevice("desktop")}
                 icon={<Monitor className="h-4 w-4" />}
               />
               <DeviceButton
                 active={device === "mobile"}
-                label="Mobile"
+                label="手机"
                 onClick={() => setDevice("mobile")}
                 icon={<Smartphone className="h-4 w-4" />}
               />
@@ -374,18 +391,18 @@ export function BuilderWorkspace() {
         </section>
 
         <aside className="grid gap-4 xl:max-h-[calc(100vh-97px)] xl:overflow-auto">
-          <Panel title="Visual Edit" icon={<Paintbrush className="h-4 w-4" />}>
-            <label className="text-xs font-semibold uppercase text-[#667085]">
-              Title
+          <Panel title="视觉编辑" icon={<Paintbrush className="h-4 w-4" />}>
+            <label className="text-xs font-semibold uppercase text-[#706f6a]">
+              标题
             </label>
             <input
               value={editTitle}
               onChange={(event) => setEditTitle(event.target.value)}
-              className="mt-2 h-10 w-full rounded-md border border-[#d9e2ec] px-3 text-sm"
+              className="mt-2 h-10 w-full rounded-md border border-[#dedbd2] px-3 text-sm"
             />
             <div className="mt-4">
-              <p className="text-xs font-semibold uppercase text-[#667085]">
-                Accent
+              <p className="text-xs font-semibold uppercase text-[#706f6a]">
+                主题色
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {accentSwatches.map((color) => (
@@ -394,7 +411,7 @@ export function BuilderWorkspace() {
                     type="button"
                     title={color}
                     onClick={() => setEditAccent(color)}
-                    className="flex h-8 w-8 items-center justify-center rounded-md border border-[#d9e2ec]"
+                    className="flex h-8 w-8 items-center justify-center rounded-md border border-[#dedbd2]"
                     style={{ background: color }}
                   >
                     {editAccent === color ? (
@@ -407,14 +424,14 @@ export function BuilderWorkspace() {
             <button
               type="button"
               onClick={saveVisualEdit}
-              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-[#0f766e] px-3 text-sm font-semibold text-white"
+              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-[#171717] px-3 text-sm font-semibold text-white"
             >
               <Save className="h-4 w-4" aria-hidden="true" />
-              Apply edit
+              应用编辑
             </button>
           </Panel>
 
-          <Panel title="Generated Files" icon={<FileCode2 className="h-4 w-4" />}>
+          <Panel title="代码文件" icon={<FileCode2 className="h-4 w-4" />}>
             <div className="grid gap-2">
               {currentFiles.map((file) => (
                 <button
@@ -424,8 +441,8 @@ export function BuilderWorkspace() {
                   className={[
                     "flex items-center gap-2 rounded-md border px-3 py-2 text-left text-sm",
                     selectedFile?.path === file.path
-                      ? "border-[#2563eb] bg-[#eef6ff] text-[#1d4ed8]"
-                      : "border-[#d9e2ec] bg-white text-[#172033]"
+                      ? "border-[#171717] bg-[#f0eee8] text-[#171717]"
+                      : "border-[#dedbd2] bg-white text-[#171717]"
                   ].join(" ")}
                 >
                   <Code2 className="h-4 w-4" aria-hidden="true" />
@@ -440,12 +457,12 @@ export function BuilderWorkspace() {
             ) : null}
           </Panel>
 
-          <Panel title="Project Data" icon={<Database className="h-4 w-4" />}>
+          <Panel title="项目数据" icon={<Database className="h-4 w-4" />}>
             <dl className="grid grid-cols-2 gap-3 text-sm">
-              <DataPoint label="Versions" value={`${currentProject.generations.length}`} />
-              <DataPoint label="Files" value={`${currentFiles.length}`} />
-              <DataPoint label="Source" value={currentProject.generations.at(-1)?.result.source ?? "local"} />
-              <DataPoint label="Updated" value={formatTime(currentProject.updatedAt)} />
+              <DataPoint label="版本" value={`${currentProject.generations.length}`} />
+              <DataPoint label="文件" value={`${currentFiles.length}`} />
+              <DataPoint label="来源" value={formatSource(currentProject.generations.at(-1)?.result.source ?? "local")} />
+              <DataPoint label="更新" value={formatTime(currentProject.updatedAt)} />
             </dl>
             {currentProject.generations.at(-1)?.result.warning ? (
               <p className="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs leading-5 text-amber-900">
@@ -484,14 +501,39 @@ function getActiveGeneration(project: ProjectRecord) {
 
 function StatusPill({ label, busy }: { label: string; busy: boolean }) {
   return (
-    <span className="inline-flex h-10 items-center gap-2 rounded-md border border-[#d9e2ec] bg-[#f6f8fb] px-3 text-sm font-semibold text-[#172033]">
+    <span className="inline-flex h-10 items-center gap-2 rounded-md border border-[#dedbd2] bg-[#f0eee8] px-3 text-sm font-semibold text-[#171717]">
       {busy ? (
-        <Loader2 className="h-4 w-4 animate-spin text-[#2563eb]" aria-hidden="true" />
+        <Loader2 className="h-4 w-4 animate-spin text-[#171717]" aria-hidden="true" />
       ) : (
         <span className="h-2 w-2 rounded-full bg-[#0f766e]" />
       )}
       {label}
     </span>
+  );
+}
+
+function NavItem({
+  active = false,
+  icon,
+  label
+}: {
+  active?: boolean;
+  icon: React.ReactNode;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      className={[
+        "flex h-10 items-center gap-2 rounded-md px-3 text-left text-sm font-medium",
+        active
+          ? "bg-white text-[#171717]"
+          : "text-[#d7d4c9] hover:bg-white/10 hover:text-white"
+      ].join(" ")}
+    >
+      {icon}
+      {label}
+    </button>
   );
 }
 
@@ -505,8 +547,8 @@ function Panel({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-lg border border-[#d9e2ec] bg-white p-4 shadow-panel">
-      <div className="mb-3 flex items-center gap-2 text-[#172033]">
+    <section className="rounded-lg border border-[#dedbd2] bg-[#fbfaf7] p-4 shadow-panel">
+      <div className="mb-3 flex items-center gap-2 text-[#171717]">
         {icon}
         <h2 className="text-sm font-semibold">{title}</h2>
       </div>
@@ -533,7 +575,7 @@ function DeviceButton({
       onClick={onClick}
       className={[
         "inline-flex h-9 items-center gap-2 rounded px-3 text-sm font-semibold",
-        active ? "bg-white text-[#172033] shadow-sm" : "text-[#667085]"
+        active ? "bg-white text-[#171717] shadow-sm" : "text-[#706f6a]"
       ].join(" ")}
     >
       {icon}
@@ -544,9 +586,9 @@ function DeviceButton({
 
 function DataPoint({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-[#d9e2ec] bg-[#f6f8fb] p-3">
-      <dt className="text-xs font-medium text-[#667085]">{label}</dt>
-      <dd className="mt-1 truncate text-sm font-semibold text-[#172033]">
+    <div className="rounded-md border border-[#dedbd2] bg-[#f0eee8] p-3">
+      <dt className="text-xs font-medium text-[#706f6a]">{label}</dt>
+      <dd className="mt-1 truncate text-sm font-semibold text-[#171717]">
         {value}
       </dd>
     </div>
@@ -554,10 +596,22 @@ function DataPoint({ label, value }: { label: string; value: string }) {
 }
 
 function formatTime(value: string): string {
-  return new Intl.DateTimeFormat("en", {
-    month: "short",
+  return new Intl.DateTimeFormat("zh-CN", {
+    month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit"
   }).format(new Date(value));
+}
+
+function formatSource(value: string): string {
+  if (value === "modelscope") {
+    return "魔搭";
+  }
+
+  if (value === "fallback") {
+    return "本地";
+  }
+
+  return value;
 }

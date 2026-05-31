@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Mini Atoms Builder",
-  description: "Agent-driven app generation demo for the ROOT full-stack challenge."
+  title: "Atoms 工作台",
+  description: "面向 ROOT 全栈笔试的多智能体应用生成 Demo。"
 };
 
 export default function RootLayout({
@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="zh-CN">
       <body>{children}</body>
     </html>
   );

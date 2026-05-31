@@ -19,7 +19,7 @@ export async function POST(request: Request) {
 
   if (prompt.length > 4000) {
     return Response.json(
-      { error: "Prompt is too long. Keep it under 4000 characters." },
+      { error: "需求太长，请控制在 4000 个字符以内。" },
       { status: 400 }
     );
   }
@@ -51,20 +51,20 @@ async function streamGeneration(
   send: (event: Parameters<typeof serializeStreamEvent>[0]) => void
 ) {
   const settings = readModelScopeSettings();
-  const normalizedPrompt = prompt || "Create a compact AI product workspace";
+  const normalizedPrompt = prompt || "创建一个紧凑的 AI 产品工作台";
 
   sendAgent(send, {
     id: "pm",
     role: "PM",
-    title: "Understand the product intent",
-    summary: "Extracting the core user, workflow, and success criteria.",
+    title: "理解产品意图",
+    summary: "提取核心用户、关键流程和成功标准。",
     status: "running"
   });
 
   if (!settings.configured) {
     const fallback = withWarning(
       createFallbackBuild(prompt),
-      "MODELSCOPE_SDK_TOKEN is not configured, so Mini Atoms used a local fallback generator."
+      "未配置 MODELSCOPE_SDK_TOKEN，Mini Atoms 已使用本地模板生成。"
     );
     send({ type: "result", result: fallback });
     return;
@@ -73,8 +73,8 @@ async function streamGeneration(
   sendAgent(send, {
     id: "architect",
     role: "Architect",
-    title: "Plan the generated app structure",
-    summary: "Asking Qwen Coder for files, preview schema, and delivery notes.",
+    title: "规划应用结构",
+    summary: "请求 Qwen Coder 生成文件、预览 Schema 和交付说明。",
     status: "running"
   });
 
@@ -97,8 +97,8 @@ async function streamGeneration(
     sendAgent(send, {
       id: "engineer",
       role: "Engineer",
-      title: "Generate the prototype",
-      summary: "Streaming implementation details from ModelScope.",
+      title: "生成应用原型",
+      summary: "正在从魔搭流式接收实现细节。",
       status: "running"
     });
 
@@ -115,8 +115,8 @@ async function streamGeneration(
     sendAgent(send, {
       id: "qa",
       role: "QA",
-      title: "Validate generated JSON",
-      summary: "Checking the model output and preparing the visual preview.",
+      title: "校验生成结果",
+      summary: "检查模型输出并准备可视化预览。",
       status: "running"
     });
 
@@ -125,11 +125,11 @@ async function streamGeneration(
   } catch (error) {
     const fallback = withWarning(
       createFallbackBuild(prompt),
-      `ModelScope generation failed: ${error instanceof Error ? error.message : "unknown error"}`
+      `魔搭生成失败：${error instanceof Error ? error.message : "未知错误"}`
     );
     send({
       type: "error",
-      message: fallback.warning ?? "ModelScope generation failed.",
+      message: fallback.warning ?? "魔搭生成失败。",
       fallback
     });
   }
