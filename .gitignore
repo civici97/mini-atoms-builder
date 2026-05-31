@@ -8,3 +8,6 @@ coverage
 *.tsbuildinfo
 vercel
 .next-dev*.log
+artifacts/
+
+.vercel
