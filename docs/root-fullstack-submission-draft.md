@@ -10,7 +10,7 @@ https://atoms-five-chi.vercel.app
 
 ## 代码链接
 
-待填：`<GitHub public repository URL>`
+https://github.com/civici97/mini-atoms-builder
 
 ## 简要说明
 

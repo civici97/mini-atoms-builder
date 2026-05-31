@@ -30,16 +30,10 @@
 
 ## Remaining External Items
 
-- Public GitHub repository URL is not created yet because this machine has no usable GitHub CLI/token/session.
+- Public GitHub repository URL is available: `https://github.com/civici97/mini-atoms-builder`.
 - Stable online deployment URL is available: `https://atoms-five-chi.vercel.app`.
 - Temporary public tunnel creation was not approved, so no temporary online URL was created.
 
 ## Required User/Auth Action
 
-Provide one of the following:
-
-- A GitHub public repository URL that I can push to, with working Git credentials on this machine.
-- A `GH_TOKEN`/`GITHUB_TOKEN` with permission to create and push a public repo.
-- Manual GitHub repo creation followed by a remote URL.
-
-After that, fill `docs/root-fullstack-submission-draft.md` with the GitHub link.
+Push the local `main` branch to the public GitHub repository and verify the remote URL resolves.
